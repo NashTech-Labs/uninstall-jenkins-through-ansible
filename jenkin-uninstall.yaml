@@ -1,0 +1,20 @@
+- name: uninstall jenkins
+  hosts: <server name>
+  become: true
+  become_method: sudo
+  tasks:
+    - name: stop jenkins service 
+      service:
+        name: jenkins
+        state: stopped
+        enabled: false
+    - name: remove packages
+      apt: 
+       name: jenkins
+       purge: yes
+       force_apt_get: yes
+       state: absent
+    - name: remove files
+      file:
+       path: /var/lib/jenkins
+       state: absent
